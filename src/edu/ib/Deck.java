@@ -3,8 +3,8 @@ package edu.ib;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Deck {
-    private ArrayList<Card> deck;
+public class Deck implements Pile {
+    private ArrayList<Card> cards;
 
     public Deck() {
         ArrayList<Card> deck = new ArrayList<>();
@@ -30,18 +30,21 @@ public class Deck {
         deck.add(new Card("Diamonds", "Q"));
         deck.add(new Card("Diamonds", "K"));
         deck.add(new Card("Diamonds", "A"));
-        this.deck = deck;
+        this.cards = deck;
     }
 
-    public ArrayList<Card> getDeck() {
-        return deck;
+    @Override
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 
-    public void setDeck(ArrayList<Card> deck) {
-        this.deck = deck;
+    public void shuffle() {
+        Collections.shuffle(this.cards);
     }
 
-    public void shuffle(){
-        Collections.shuffle(this.deck);
+    @Override
+    public void move(int i, Pile o2) {
+        o2.getCards().add(getCards().get(i));
+        getCards().remove(i);
     }
 }
