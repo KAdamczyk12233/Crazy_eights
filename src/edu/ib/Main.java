@@ -44,8 +44,8 @@ public class Main {
                                 continueplay = true;
                             }
                         }
-                        ArrayList<Card> newDeck= new ArrayList<>(); //przetasowanie
-                        for(int j=0; j<table.getCards().size()-1; j++){
+                        ArrayList<Card> newDeck = new ArrayList<>(); //przetasowanie
+                        for (int j = 0; j < table.getCards().size() - 1; j++) {
                             newDeck.add(table.getCards().get(j));
                             table.getCards().remove(j);
                             deck.setDeck(newDeck);
