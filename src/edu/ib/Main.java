@@ -40,7 +40,7 @@ public class Main {
                         System.out.println(p[i].getHand().get(j).getRank() + p[i].getHand().get(j).getSuit());
                     }
                     
-                    System.out.println("Karta na stole:");
+                    System.out.println("\nKarta na stole:");
                     System.out.println(table.getCards().get(table.getCards().size() - 1).getRank() 
                                        + table.getCards().get(table.getCards().size() - 1).getSuit());
                     
@@ -52,6 +52,16 @@ public class Main {
                         
                         if (rank.equals("Pociągnij")) { // gracz dobiera kartę
                             // powinno być sprawdzenie czy deck nie jest pusty
+                            /*
+                            if (deck.getDeck().size() == 0) {
+                                System.out.println("Brak kart do dobrania, opuszczasz kolejkę");
+                                break;
+                            } else {
+                                p[i].getHand().add(deck.getDeck().get(deck.getDeck().size() - 1));
+                                deck.getDeck().remove(deck.getDeck().size() - 1);
+                                break;
+                            }
+                            */
                             p[i].getHand().add(deck.getDeck().get(deck.getDeck().size() - 1));
                             deck.getDeck().remove(deck.getDeck().size() - 1);
                             break;
