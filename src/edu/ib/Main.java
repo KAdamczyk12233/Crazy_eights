@@ -6,14 +6,15 @@ public class Main {
 
     public static void main(String[] args) {
         Deck deck = new Deck();
-        deck.shuffle();
+        deck.shuffle(); // przetasowanie
         Table table = new Table();
         Player p1 = new Player();
         Player p2 = new Player();
-        Player[] p = {p1, p2};
+        Player[] p = {p1, p2}; // gracze
+        
         for (int i = 0; i < 5; i++) {
-            p[0].getHand().add(deck.getDeck().get(deck.getDeck().size() - 1));
-            deck.getDeck().remove(deck.getDeck().size() - 1);
+            p[0].getHand().add(deck.getDeck().get(deck.getDeck().size() - 1)); // dodanie karty graczowi 1
+            deck.getDeck().remove(deck.getDeck().size() - 1); // usunięcie karty z puli kart
             p[1].getHand().add(deck.getDeck().get(deck.getDeck().size() - 1));
             deck.getDeck().remove(deck.getDeck().size() - 1);
         }
