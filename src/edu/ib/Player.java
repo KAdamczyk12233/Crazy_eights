@@ -2,7 +2,7 @@ package edu.ib;
 
 import java.util.ArrayList;
 
-public class Player implements Pile {
+public abstract class Player implements Pile {
     private ArrayList<Card> cards = new ArrayList<>();
     private int n;
 

@@ -9,9 +9,9 @@ public class Main {
         Deck deck = new Deck();
         deck.shuffle(); // przetasowanie
         Table table = new Table();
-        Player p1 = new Player();
-        Player p2 = new Player();
-        Player[] p = {p1, p2}; // gracze
+        RealPlayer p1 = new RealPlayer();
+        RealPlayer p2 = new RealPlayer();
+        RealPlayer[] p = {p1, p2}; // gracze
         for (int j = 0; j < p.length; j++) {
             for (int i = 0; i < 5; i++) {
                 deck.move(deck.getCards().size() - 1, p[j]);
@@ -25,6 +25,7 @@ public class Main {
         String suit = "";
         Boolean winner = true;
         String winnerName = "";
+        Card currentCard = new Card();
 
         while (winner) { // rozgrywka
 
@@ -73,34 +74,14 @@ public class Main {
                             break;
                         }
                         suit = scan1.nextLine();
-
-
-                        Boolean match = true;
-                        Boolean hasCard = false;
-
-                        for (int j = 0; j < p[i].getN(); j++) {
-
-                            if (p[i].getCards().get(j).getRank().equals(rank) && p[i].getCards().get(j).getSuit().equals(suit)) { //sprawdzenie czy karta jest na ręce
-                                hasCard = true;
-                                match = false;
-
-                                if (p[i].getCards().get(j).getSuit().equals(table.getCards().get(table.getCards().size() - 1).getSuit())
-                                        || p[i].getCards().get(j).getRank().equals(table.getCards().get(table.getCards().size() - 1).getRank())
-                                        || p[i].getCards().get(j).getRank().equals("8")) { // sprawdzenie czy karta pasuje do karty na stole
-                                    match = true; // karta pasuje
-                                    table.getCards().add(p[i].getCards().get(j)); // dodanie karty do stołu
-                                    p[i].getCards().remove(j); // usunięcie karty od gracza
-                                    flag1 = false;
+                        currentCard = p[i].turn(rank, suit, table);
+                        if (!currentCard.getSuit().equals("notyet")) {
+                            flag1 = false;
+                            for (int j = 0; j < p[i].getCards().size(); j++) {
+                                if (p[i].getCards().get(j).getRank().equals(currentCard.getRank()) && p[i].getCards().get(j).getSuit().equals(currentCard.getSuit())) {
+                                    p[i].move(j, table);
                                 }
                             }
-                        }
-
-                        if (!hasCard) { // gracz nie ma karty, którą zadeklarował
-                            System.out.println("Nie posiadasz tej karty");
-                        }
-
-                        if (!match) { // karta, którą zadeklarował gracz, nie pasuje
-                            System.out.println("Karta nie pasuje");
                         }
                     }
                 }
