@@ -21,4 +21,15 @@ public abstract class Player implements Pile {
         o2.getCards().add(getCards().get(i));
         getCards().remove(i);
     }
+    public boolean isReal(boolean real) {
+        return real;
+    }
+
+    public Card turn(Card card){
+        return card;
+    }
+
+    public abstract boolean isReal();
+
+    public abstract Card turn(String rank, String suit, Table table);
 }

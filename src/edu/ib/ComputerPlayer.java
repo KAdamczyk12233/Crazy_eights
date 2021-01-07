@@ -1,10 +1,7 @@
 package edu.ib;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-public class RealPlayer extends Player {
-    boolean real = true;
+public class ComputerPlayer extends Player {
+    boolean real = false;
 
     @Override
     public boolean isReal() {
