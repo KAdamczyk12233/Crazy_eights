@@ -22,9 +22,11 @@ public class ComputerPlayer extends Player {
 
                 if (getCards().get(j).getSuit().equals(table.getCards().get(table.getCards().size() - 1).getSuit())
                         || getCards().get(j).getRank().equals(table.getCards().get(table.getCards().size() - 1).getRank())
-                        || getCards().get(j).getRank().equals("8")) { // sprawdzenie czy karta pasuje do karty na stole
+                        || (getCards().get(j).getRank().equals("8") && getN() != 1)) { // sprawdzenie czy karta pasuje do karty na stole
                     match = true; // karta pasuje
                     card = getCards().get(j);
+                } else if (getCards().get(j).getRank().equals("8") && getN() == 1) {
+                    System.out.println("Nie możesz skończyć ósemką");
                 }
             }
         }
