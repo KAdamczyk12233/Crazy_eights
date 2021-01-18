@@ -31,5 +31,5 @@ public abstract class Player implements Pile {
 
     public abstract boolean isReal();
 
-    public abstract Card turn(String rank, String suit, Table table);
+    public abstract Card turn(String rank, String suit, Table table, String currentSuit);
 }

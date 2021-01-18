@@ -12,7 +12,7 @@ public class RealPlayer extends Player {
     }
 
     @Override
-    public Card turn(String rank, String suit, Table table) {
+    public Card turn(String rank, String suit, Table table, String currentSuit) {
         Card card = new Card();
         Boolean match = true;
         Boolean hasCard = false;
@@ -23,7 +23,7 @@ public class RealPlayer extends Player {
                 hasCard = true;
                 match = false;
 
-                if (getCards().get(j).getSuit().equals(table.getCards().get(table.getCards().size() - 1).getSuit())
+                if (getCards().get(j).getSuit().equals(currentSuit)
                         || getCards().get(j).getRank().equals(table.getCards().get(table.getCards().size() - 1).getRank())
                         || (getCards().get(j).getRank().equals("8") && getN() != 1)) { // sprawdzenie czy karta pasuje do karty na stole
                     match = true; // karta pasuje

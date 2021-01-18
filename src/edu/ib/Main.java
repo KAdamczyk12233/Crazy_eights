@@ -26,7 +26,7 @@ public class Main {
         Boolean winner = true;
         String winnerName = "";
         Card currentCard = new Card();
-
+        String currentSuit = table.getCards().get(table.getCards().size() - 1).getSuit();
         while (winner) { // rozgrywka
 
             for (int i = 0; i < p.length; i++) { // tura gry
@@ -34,11 +34,10 @@ public class Main {
                 System.out.println("GRACZ " + (i + 1));
                 if (p[i].isReal()) {
                     while (flag1) {
-
                         if (deck.getCards().size() == 0) {  // sprawdzenie czy deck jest pusty
                             Boolean continueplay = false;
                             for (int j = 0; j < p[i].getN(); j++) {
-                                if (p[i].getCards().get(j).getSuit().equals(table.getCards().get(table.getCards().size() - 1).getSuit())
+                                if (p[i].getCards().get(j).getSuit().equals(currentSuit)
                                         || p[i].getCards().get(j).getRank().equals(table.getCards().get(table.getCards().size() - 1).getRank())
                                         || p[i].getCards().get(j).getRank().equals("8")) {
                                     continueplay = true;
@@ -63,7 +62,8 @@ public class Main {
 
                         System.out.println("\nKarta na stole:");
                         System.out.println(table.getCards().get(table.getCards().size() - 1).getRank()
-                                + table.getCards().get(table.getCards().size() - 1).getSuit());
+                                + table.getCards().get(table.getCards().size() - 1).getSuit()
+                                + "(" + currentSuit + ")");
 
 
                         while (flag1) { // ruch gracza
@@ -74,12 +74,26 @@ public class Main {
                                 break;
                             }
                             suit = scan1.nextLine();
-                            currentCard = p[i].turn(rank, suit, table);
+                            currentCard = p[i].turn(rank, suit, table, currentSuit);
                             if (!currentCard.getSuit().equals("notyet")) {
                                 flag1 = false;
                                 for (int j = 0; j < p[i].getCards().size(); j++) {
                                     if (p[i].getCards().get(j).getRank().equals(currentCard.getRank()) && p[i].getCards().get(j).getSuit().equals(currentCard.getSuit())) {
                                         p[i].move(j, table);
+                                        currentSuit = currentCard.getSuit();
+                                        boolean stop = true;
+                                        if (currentCard.getRank().equals("8")) {
+                                            while (stop) {
+                                                System.out.println("Wybierz kolor:");
+                                                String choice = scan1.nextLine();
+                                                if (choice.equals("Hearts") || choice.equals("Spades") || choice.equals("Diamonds") || choice.equals("Clubs")) {
+                                                    currentSuit = choice;
+                                                    stop = false;
+                                                } else {
+                                                    System.out.println("Nie ma takiego koloru");
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -125,13 +139,14 @@ public class Main {
                                 if (!p[i].getCards().get(j).getRank().equals("8")) {
                                     rank = p[i].getCards().get(j).getRank();
                                     suit = p[i].getCards().get(j).getSuit();
-                                    currentCard = p[i].turn(rank, suit, table);
+                                    currentCard = p[i].turn(rank, suit, table, currentSuit);
                                     if (!currentCard.getSuit().equals("notyet")) {
                                         flag1 = false;
                                         for (int h = 0; h < p[i].getCards().size(); h++) {
                                             if (p[i].getCards().get(h).getRank().equals(currentCard.getRank()) && p[i].getCards().get(h).getSuit().equals(currentCard.getSuit())) {
                                                 p[i].move(h, table);
                                                 madeAMove = true;
+                                                currentSuit = currentCard.getSuit();
                                             }
                                         }
                                     }
@@ -142,13 +157,14 @@ public class Main {
                                     if (p[i].getCards().get(j).getRank().equals("8")) {
                                         rank = p[i].getCards().get(j).getRank();
                                         suit = p[i].getCards().get(j).getSuit();
-                                        currentCard = p[i].turn(rank, suit, table);
+                                        currentCard = p[i].turn(rank, suit, table, currentSuit);
                                         if (!currentCard.getSuit().equals("notyet")) {
                                             flag1 = false;
                                             for (int h = 0; h < p[i].getCards().size(); h++) {
                                                 if (p[i].getCards().get(h).getRank().equals(currentCard.getRank()) && p[i].getCards().get(h).getSuit().equals(currentCard.getSuit())) {
                                                     p[i].move(h, table);
                                                     madeAMove = true;
+                                                    currentSuit = p2.theMost();
                                                 }
                                             }
                                         }
