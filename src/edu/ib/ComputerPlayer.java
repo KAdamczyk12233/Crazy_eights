@@ -20,9 +20,12 @@ public class ComputerPlayer extends Player {
                 hasCard = true;
                 match = false;
 
+                // modyfikacja: if czy karty komputera = liczba 8 + 1, jeśli tak, to zawsze wyrzuca 8-kę, niezależnie,
+                // czy karta (która nie jest 8) pasuje czy nie - obligatoryjne wyrzucenie 8-ki
                 if (getCards().get(j).getSuit().equals(currentSuit)
                         || getCards().get(j).getRank().equals(table.getCards().get(table.getCards().size() - 1).getRank())
                         || (getCards().get(j).getRank().equals("8") && getN() != 1)) { // sprawdzenie czy karta pasuje do karty na stole
+                    // liczba kart != 1, komputer może wyrzucić 8-kę
                     match = true; // karta pasuje
                     card = getCards().get(j);
                 } else if (getCards().get(j).getRank().equals("8") && getN() == 1) {
@@ -30,16 +33,20 @@ public class ComputerPlayer extends Player {
                 }
             }
         }
+
+        // JavaFX - nic nie będzie się dziać
         if (!hasCard) { // gracz nie ma karty, którą zadeklarował
             System.out.println("Nie posiadasz tej karty");
         }
 
+        // JavaFX - komunikat
         if (!match) { // karta, którą zadeklarował gracz, nie pasuje
             System.out.println("Karta nie pasuje");
         }
         return super.turn(card);
     }
 
+    // metoda sprawdzająca, jakich kolorów kart komputer ma najwięcej, żeby wybrać kolor
     public String theMost() {
         String r = "";
         int s = 0;

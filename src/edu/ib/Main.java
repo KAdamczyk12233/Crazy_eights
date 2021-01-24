@@ -13,7 +13,7 @@ public class Main {
         ComputerPlayer p2 = new ComputerPlayer();
         Player[] p = {p1, p2}; // gracze
         for (int j = 0; j < p.length; j++) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 20; i++) { // dla dwóch graczy liczba kart = 7
                 deck.move(deck.getCards().size() - 1, p[j]);
             }
         }
@@ -27,6 +27,7 @@ public class Main {
         String winnerName = "";
         Card currentCard = new Card();
         String currentSuit = table.getCards().get(table.getCards().size() - 1).getSuit();
+        // boolean somebodyWon = true;
         while (winner) { // rozgrywka
 
             for (int i = 0; i < p.length; i++) { // tura gry
@@ -34,7 +35,7 @@ public class Main {
                 System.out.println("GRACZ " + (i + 1));
                 if (p[i].isReal()) {
                     while (flag1) {
-                        if (deck.getCards().size() == 0) {  // sprawdzenie czy deck jest pusty
+                        if (deck.getCards().size() == 0) {  // sprawdzenie czy deck jest pusty, jeśli tak, tasowanie kart
                             Boolean continueplay = false;
                             for (int j = 0; j < p[i].getN(); j++) {
                                 if (p[i].getCards().get(j).getSuit().equals(currentSuit)
@@ -56,10 +57,12 @@ public class Main {
                         }
 
                         System.out.println("Twoje karty:");
+                        // JavaFX - scrollView
                         for (int j = 0; j < p[i].getN(); j++) {
                             System.out.println(p[i].getCards().get(j).getRank() + p[i].getCards().get(j).getSuit());
                         }
 
+                        // JavaFX - załadowany obrazek
                         System.out.println("\nKarta na stole:");
                         System.out.println(table.getCards().get(table.getCards().size() - 1).getRank()
                                 + table.getCards().get(table.getCards().size() - 1).getSuit()
@@ -68,13 +71,21 @@ public class Main {
 
                         while (flag1) { // ruch gracza
                             rank = scan1.nextLine();
+                            // JavaFX - onBtnGetCardClick
                             if (rank.equals("P")) { // gracz dobiera karty
-                                p[i].getCards().add(deck.getCards().get(deck.getCards().size() - 1));
-                                deck.getCards().remove(deck.getCards().size() - 1);
-                                break;
+                                try { // zapobieganie dobrania karty z pustego stosu
+                                    p[i].getCards().add(deck.getCards().get(deck.getCards().size() - 1));
+                                    deck.getCards().remove(deck.getCards().size() - 1);
+                                    break;
+                                    // JavaFX - komunikat
+                                } catch (IndexOutOfBoundsException e) {
+                                    System.out.println("Brak możliwości dobrania karty, reset gry");
+                                }
                             }
                             suit = scan1.nextLine();
                             currentCard = p[i].turn(rank, suit, table, currentSuit);
+
+
                             if (!currentCard.getSuit().equals("notyet")) {
                                 flag1 = false;
                                 for (int j = 0; j < p[i].getCards().size(); j++) {
@@ -99,6 +110,7 @@ public class Main {
                             }
                         }
                     }
+
                 } else {
                     while (flag1) {
 
@@ -136,6 +148,9 @@ public class Main {
                         while (flag1) { // ruch gracza
                             boolean madeAMove = false;
                             for (int j = 0; j < p[i].getCards().size(); j++) {
+                                if(madeAMove){
+                                    break;
+                                }
                                 if (!p[i].getCards().get(j).getRank().equals("8")) {
                                     rank = p[i].getCards().get(j).getRank();
                                     suit = p[i].getCards().get(j).getSuit();
@@ -147,12 +162,16 @@ public class Main {
                                                 p[i].move(h, table);
                                                 madeAMove = true;
                                                 currentSuit = currentCard.getSuit();
+                                                break;
                                             }
                                         }
                                     }
                                 }
                             }
                             if (!madeAMove) {
+                                if(madeAMove){
+                                    break;
+                                }
                                 for (int j = 0; j < p[i].getCards().size(); j++) {
                                     if (p[i].getCards().get(j).getRank().equals("8")) {
                                         rank = p[i].getCards().get(j).getRank();
@@ -178,6 +197,7 @@ public class Main {
                         }
                     }
                 }
+                // JavaFX - komunikat o wygranej
                 if (p[i].getN() == 0) { // wygrana
                     winner = false;
                     winnerName = "Player" + (i + 1);

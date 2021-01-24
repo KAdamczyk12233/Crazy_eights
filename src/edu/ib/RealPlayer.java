@@ -28,16 +28,19 @@ public class RealPlayer extends Player {
                         || (getCards().get(j).getRank().equals("8") && getN() != 1)) { // sprawdzenie czy karta pasuje do karty na stole
                     match = true; // karta pasuje
                     card = getCards().get(j);
+                    // JavaFX - komunikat
                 } else if (getCards().get(j).getRank().equals("8") && getN() == 1) {
                     System.out.println("Nie możesz skończyć ósemką");
                 }
             }
         }
 
+        // JavaFX - komunikat - tego nie będzie, bo gracz wybiera karty spośród widocznych na ekranie
         if (!hasCard) { // gracz nie ma karty, którą zadeklarował
             System.out.println("Nie posiadasz tej karty");
         }
 
+        // JavaFX - komunikat
         if (!match) { // karta, którą zadeklarował gracz, nie pasuje
             System.out.println("Karta nie pasuje");
         }
